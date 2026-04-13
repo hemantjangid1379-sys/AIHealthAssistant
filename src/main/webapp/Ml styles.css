@@ -1,0 +1,349 @@
+/* =====================================================================
+   ml-styles.css  —  NEW FILE
+   Styles for all ML + GenAI UI components added to MedAI
+   ===================================================================== */
+
+
+/* ── 1. SYMPTOM CATEGORY TAG ─────────────────────────────────────────
+   Displays the ML-classified body system (e.g. "Respiratory")
+   as a small pill tag above the AI response.
+   ──────────────────────────────────────────────────────────────────── */
+.symptom-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;          /* Full pill shape */
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  background: rgba(99, 153, 34, 0.15);
+  color: #3B6D11;
+  border: 1px solid rgba(99, 153, 34, 0.3);
+}
+
+/* Category-specific colors */
+.symptom-tag.Respiratory     { background: rgba(55, 138, 221, 0.12); color: #185FA5; border-color: rgba(55, 138, 221, 0.3); }
+.symptom-tag.Digestive       { background: rgba(186, 117, 23, 0.12); color: #854F0B; border-color: rgba(186,117,23,0.3); }
+.symptom-tag.Neurological    { background: rgba(127, 119, 221, 0.12); color: #534AB7; border-color: rgba(127,119,221,0.3); }
+.symptom-tag.Cardiovascular  { background: rgba(226, 75, 74, 0.12); color: #A32D2D; border-color: rgba(226,75,74,0.3); }
+.symptom-tag.Skin            { background: rgba(216, 90, 48, 0.12); color: #993C1D; border-color: rgba(216,90,48,0.3); }
+.symptom-tag.Musculoskeletal { background: rgba(29, 158, 117, 0.12); color: #0F6E56; border-color: rgba(29,158,117,0.3); }
+.symptom-tag.General         { background: rgba(136, 135, 128, 0.12); color: #5F5E5A; border-color: rgba(136,135,128,0.3); }
+
+
+/* ── 2. RISK LEVEL BADGE ─────────────────────────────────────────────
+   Displays the ML risk score: LOW / MEDIUM / HIGH
+   Shown prominently just before the AI response cards.
+   ──────────────────────────────────────────────────────────────────── */
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.risk-badge.LOW {
+  background: rgba(99, 153, 34, 0.12);
+  color: #27500A;
+  border: 1px solid rgba(99, 153, 34, 0.35);
+}
+
+.risk-badge.MEDIUM {
+  background: rgba(239, 159, 39, 0.15);
+  color: #633806;
+  border: 1px solid rgba(239, 159, 39, 0.4);
+}
+
+.risk-badge.HIGH {
+  background: rgba(226, 75, 74, 0.12);
+  color: #791F1F;
+  border: 1px solid rgba(226, 75, 74, 0.4);
+  animation: pulse-high 1.8s ease-in-out infinite;  /* Pulses for urgency */
+}
+
+/* Pulsing animation for HIGH risk — draws attention */
+@keyframes pulse-high {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(226, 75, 74, 0.25); }
+  50%       { box-shadow: 0 0 0 6px rgba(226, 75, 74, 0); }
+}
+
+/* Risk dot indicator */
+.risk-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.risk-badge.LOW    .risk-dot { background: #3B6D11; }
+.risk-badge.MEDIUM .risk-dot { background: #854F0B; }
+.risk-badge.HIGH   .risk-dot { background: #A32D2D; }
+
+
+/* ── 3. STRUCTURED AI RESPONSE CARDS ─────────────────────────────────
+   Replaces the raw HTML response with clean, styled cards.
+   Each section (Conditions, Medicines, Precautions) gets its own card.
+   ──────────────────────────────────────────────────────────────────── */
+.ai-response-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* Greeting text at the top of the response */
+.ai-greeting {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+/* Individual section card */
+.response-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  overflow: hidden;
+}
+
+/* Card header row */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 8px;
+}
+
+/* Card icon dot (color-coded per section) */
+.card-icon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Section-specific accent colors */
+.response-card.conditions .card-icon  { background: #378ADD; }
+.response-card.medicines  .card-icon  { background: #1D9E75; }
+.response-card.precautions .card-icon { background: #EF9F27; }
+.response-card.doctor     .card-icon  { background: #E24B4A; }
+
+.response-card.conditions .card-header  { color: rgba(100, 180, 255, 0.8); }
+.response-card.medicines  .card-header  { color: rgba(100, 210, 170, 0.8); }
+.response-card.precautions .card-header { color: rgba(255, 185, 80, 0.8); }
+.response-card.doctor     .card-header  { color: rgba(255, 120, 120, 0.8); }
+
+/* Card body list */
+.card-body ul {
+  margin: 0;
+  padding: 0 0 0 16px;
+  list-style: disc;
+}
+
+.card-body ul li {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.6;
+  margin-bottom: 3px;
+}
+
+/* Card body plain text (for whenToSeeDoctor) */
+.card-body p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Disclaimer text */
+.ai-disclaimer {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 8px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+
+/* ── 4. RISK ADVICE BAR ───────────────────────────────────────────────
+   A horizontal advice strip shown after the response cards.
+   ──────────────────────────────────────────────────────────────────── */
+.risk-advice-bar {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.risk-advice-bar.LOW    { background: rgba(99,153,34,0.1);  color: #97C459; border-left: 3px solid #639922; }
+.risk-advice-bar.MEDIUM { background: rgba(239,159,39,0.1); color: #FAC775; border-left: 3px solid #BA7517; }
+.risk-advice-bar.HIGH   { background: rgba(226,75,74,0.1);  color: #F09595; border-left: 3px solid #A32D2D; }
+
+
+/* ── 5. PATIENT SUMMARY REPORT MODAL ────────────────────────────────
+   The summary report shown when "Generate Summary" is clicked.
+   ──────────────────────────────────────────────────────────────────── */
+#summaryModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#summaryModal.open {
+  display: flex;
+}
+
+.summary-card {
+  background: #1c1f2a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.summary-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.summary-patient-info {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 16px;
+}
+
+.summary-section {
+  margin-bottom: 14px;
+}
+
+.summary-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 5px;
+}
+
+.summary-section-body {
+  font-size: 13px;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.7;
+}
+
+.summary-section-body ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.summary-section-body ul li {
+  margin-bottom: 3px;
+}
+
+/* Urgency strip inside summary */
+.summary-urgency {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.summary-urgency.LOW    { background: rgba(99,153,34,0.15);  color: #97C459; }
+.summary-urgency.MEDIUM { background: rgba(239,159,39,0.15); color: #FAC775; }
+.summary-urgency.HIGH   { background: rgba(226,75,74,0.15);  color: #F09595; }
+
+/* Close button */
+.summary-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: rgba(255,255,255,0.6);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.summary-close-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+/* Generate Summary button (added to the topbar) */
+.btn-summary {
+  background: rgba(99, 153, 34, 0.15);
+  color: #97C459;
+  border: 1px solid rgba(99, 153, 34, 0.35);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.btn-summary:hover {
+  background: rgba(99, 153, 34, 0.28);
+}
+
+.btn-summary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+/* ── 6. GENERATING SUMMARY SPINNER ─────────────────────────────────── */
+.summary-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  padding: 20px 0;
+  justify-content: center;
+}
+
+.summary-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.15);
+  border-top-color: #97C459;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
